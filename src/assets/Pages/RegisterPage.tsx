@@ -36,6 +36,7 @@ export const RegisterPage = () => {
         email: !email.trim() ? "Email is required." : "",
         password: !password.trim() ? "Password is required." : "",
       });
+      return;
     }
 
     const exists = user.some((u) => u.email === email);
@@ -74,7 +75,10 @@ export const RegisterPage = () => {
                   </label>
                   <input
                     value={userName}
-                    onChange={(e) => setUserName(e.target.value)}
+                    onChange={(e) => {
+                      setUserName(e.target.value);
+                      setErrors((prev) => ({ ...prev, userName: "" }));
+                    }}
                     type="text"
                     className="form-control"
                     id="UserName"
@@ -90,7 +94,10 @@ export const RegisterPage = () => {
                   </label>
                   <input
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                      setErrors((prev) => ({ ...prev, email: "" }));
+                    }}
                     type="email"
                     className="form-control"
                     id="email"
@@ -106,7 +113,10 @@ export const RegisterPage = () => {
                   </label>
                   <input
                     value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    onChange={(e) => {
+                      setPassword(e.target.value);
+                      setErrors((prev) => ({ ...prev, password: "" }));
+                    }}
                     type="password"
                     className="form-control"
                     id="password"
