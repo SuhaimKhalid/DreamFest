@@ -101,3 +101,40 @@
   }
 }
 /* Register Page CSS End */
+
+/* Create Fest Page CSS Start */
+
+#CreateFestival {
+  width: 100%;
+  height: 100vh;
+  background: #2a7b9b;
+  background: var(--primary_background);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#CreateFestival h1 {
+  text-align: center;
+}
+.form_col {
+  border: 2px solid white;
+  border-radius: 10px;
+  padding: 20px;
+  width: 500px;
+}
+.form_col .btn_box button {
+  display: block;
+  width: 100%;
+  background-color: #ffe9e959;
+  margin: 10px 0px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+.form_col .btn_box button:hover {
+  background-color: rgb(255, 255, 255);
+  color: #57c785;
+}
+
+/* Create Fest Page CSS End */

@@ -1,6 +1,6 @@
-import { Card, Container } from "react-bootstrap";
+import { Card, Container, Row } from "react-bootstrap";
 import NavbarComponent from "../Components/NavbarComponent";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { AppContext } from "../Context/AppContext";
 import { useNavigate } from "react-router-dom";
 
@@ -8,7 +8,11 @@ export const DashBoard = () => {
   const navigate = useNavigate();
   const context = useContext(AppContext);
   if (!context) return null;
-  const { currentUser } = context;
+  const { currentUser, all_fest } = context;
+  useEffect(() => {
+    if (!all_fest) {
+    }
+  }, []);
   return (
     <>
       <NavbarComponent />
@@ -23,15 +27,40 @@ export const DashBoard = () => {
             </p>
             <button
               onClick={() => {
-                navigate("/createFestival");
+                navigate("/createfestival");
               }}
             >
-              {" "}
               Create Festival
             </button>
           </div>
           <div className="allEvents">
-            <Card></Card>
+            <Row>
+              {all_fest
+                .filter((f) => f.email === currentUser?.email)
+                .map((f) => {
+                  const dateObj = new Date(f.start_Date);
+
+                  const month = dateObj.toLocaleDateString("en-GB", {
+                    month: "short",
+                  });
+
+                  const day = dateObj.toLocaleDateString("en-GB", {
+                    day: "numeric",
+                  });
+
+                  return (
+                    <div className="col-lg-4 col-md-6 col-sm-12 eventCol">
+                      <p className="E_month">{month} </p>
+                      <p className="E_month">{day} </p>
+                      <h3>{f.festival_Name}</h3>
+                      <p className="p1">Duration : {f.duration} (Days)</p>
+                      <p className="p1">
+                        Expected Audience: {f.expected_audience}
+                      </p>
+                    </div>
+                  );
+                })}
+            </Row>
           </div>
         </Container>
       </section>

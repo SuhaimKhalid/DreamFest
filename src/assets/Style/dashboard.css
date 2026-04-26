@@ -39,3 +39,16 @@
   border: 2px solid white;
   color: #57c785;
 }
+
+.eventCol {
+  text-align: center;
+  background: #d1d4cb59;
+  padding: 20px 10px;
+  height: 200px;
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20px;
+}
+.eventCol .p1 {
+}

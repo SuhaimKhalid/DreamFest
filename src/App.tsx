@@ -6,8 +6,9 @@ import { Route, Routes } from "react-router-dom";
 import { WildScreen } from "./assets/Pages/WildScreen";
 import "../src/assets/Style/wildscreen.css";
 import { DashBoard } from "./assets/Pages/DashBoard";
-import { CreateFestival } from "./assets/Pages/createFestival";
+
 import "./assets/Style/dashboard.css";
+import { CreateFest } from "./assets/Pages/CreatFest";
 
 function App() {
   return (
@@ -18,7 +19,7 @@ function App() {
           <Route path="/register" element={<RegisterPage />}></Route>
           <Route path="/login" element={<Login />}></Route>
           <Route path="/dashboard" element={<DashBoard />}></Route>
-          <Route path="/createfestival" element={<CreateFestival />}></Route>
+          <Route path="/createfestival" element={<CreateFest />}></Route>
         </Routes>
       </main>
     </>
