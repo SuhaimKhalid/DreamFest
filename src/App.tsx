@@ -6,6 +6,7 @@ import { RegisterPage } from "./assets/Pages/RegisterPage";
 import { Route, Routes } from "react-router-dom";
 import { WildScreen } from "./assets/Pages/WildScreen";
 import "../src/assets/Style/wildscreen.css";
+import { DashBoard } from "./assets/Pages/DashBoard";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/" element={<WildScreen />}></Route>
         <Route path="/register" element={<RegisterPage />}></Route>
         <Route path="/login" element={<Login />}></Route>
+        <Route path="/dashboard" element={<DashBoard />}></Route>
       </Routes>
     </>
   );

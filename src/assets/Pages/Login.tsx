@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Container, Row } from "react-bootstrap";
 import type { User } from "../Utilities/Type";
 import "../Style/formPages.css";
+import { useNavigate } from "react-router-dom";
 
 type LoginErrors = {
   email?: string;
@@ -9,6 +10,8 @@ type LoginErrors = {
 };
 
 export const Login = () => {
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -45,6 +48,7 @@ export const Login = () => {
     }
 
     localStorage.setItem("CurrentUser", JSON.stringify(currentUser));
+    navigate("/dashboard");
   }
   return (
     <>

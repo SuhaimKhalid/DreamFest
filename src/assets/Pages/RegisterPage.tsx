@@ -2,13 +2,16 @@ import { useEffect, useState } from "react";
 import type { User } from "../Utilities/Type";
 import { Container, Row } from "react-bootstrap";
 import "../Style/formPages.css";
+import { useNavigate } from "react-router-dom";
 
 type registerErrors = {
   userName?: string;
   email?: string;
   password?: string;
 };
+
 export const RegisterPage = () => {
+  const navigate = useNavigate();
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -58,6 +61,9 @@ export const RegisterPage = () => {
     console.log(updatedUser);
     // Store In Local Storage
     localStorage.setItem("User", JSON.stringify(updatedUser));
+
+    localStorage.setItem("CurrentUser", JSON.stringify(newUser));
+    navigate("/dashboard");
   }
 
   return (
