@@ -1,13 +1,19 @@
 import { useEffect, useState } from "react";
-import { Container } from "react-bootstrap";
+import { Container, Row } from "react-bootstrap";
 import type { User } from "../Utilities/Type";
+import "../Style/formPages.css";
+
+type LoginErrors = {
+  email?: string;
+  password?: string;
+};
 
 export const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const [allUsers, setAllUsers] = useState<User[]>([]);
-
+  const [errors, setErrors] = useState<LoginErrors>({});
   useEffect(() => {
     const savedUser = localStorage.getItem("User");
     if (savedUser) {
@@ -18,6 +24,15 @@ export const Login = () => {
 
   function LoginHandler(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    if (!email.trim() || !password.trim()) {
+      setErrors({
+        email: !email.trim() ? "Email is required." : "",
+        password: !password.trim() ? "Password is required." : "",
+      });
+      return;
+    }
+
+    setErrors({});
 
     const currentUser = allUsers.find(
       (u) => u.email === email && u.password === password,
@@ -34,59 +49,69 @@ export const Login = () => {
   return (
     <>
       {
-        <Container>
-          <section id="LoginPage">
-            <h1>Login </h1>
-            <form onSubmit={LoginHandler}>
-              <div className="mb-3">
-                <label htmlFor="email" className="form-label">
-                  Email address
-                </label>
-                <input
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  type="email"
-                  className="form-control"
-                  id="email"
-                />
-                {/* {errors.email && (
-                  <small className="text-danger">{errors.email}</small>
-                )} */}
-              </div>
+        <section id="LoginPage">
+          <Row>
+            <Container>
+              <div className=" form_col">
+                <h1 style={{ textAlign: "center" }}> Login </h1>
+                <form onSubmit={LoginHandler}>
+                  <div className="mb-3">
+                    <label htmlFor="email" className="form-label">
+                      Email address
+                    </label>
+                    <input
+                      value={email}
+                      onChange={(e) => {
+                        setEmail(e.target.value);
+                        setErrors((prev) => ({ ...prev, email: "" }));
+                      }}
+                      type="email"
+                      className="form-control"
+                      id="email"
+                    />
+                    {errors.email && (
+                      <small className="text-danger">{errors.email}</small>
+                    )}
+                  </div>
 
-              <div className="mb-3">
-                <label htmlFor="password" className="form-label">
-                  Password
-                </label>
-                <input
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  type="password"
-                  className="form-control"
-                  id="password"
-                />
-                {/* {errors.password && (
-                  <small className="text-danger">{errors.password}</small>
-                )} */}
-              </div>
+                  <div className="mb-3">
+                    <label htmlFor="password" className="form-label">
+                      Password
+                    </label>
+                    <input
+                      value={password}
+                      onChange={(e) => {
+                        setPassword(e.target.value);
+                        setErrors((prev) => ({ ...prev, password: "" }));
+                      }}
+                      type="password"
+                      className="form-control"
+                      id="password"
+                    />
+                    {errors.password && (
+                      <small className="text-danger">{errors.password}</small>
+                    )}
+                  </div>
 
-              <div className="btn_box">
-                <button
-                  onClick={(e) => {
-                    e.preventDefault();
-                    window.open("/register", "_self");
-                  }}
-                  className="btn RegisterBtn"
-                >
-                  <span>Register</span>
-                </button>
-                <button type="submit" className="btn LoginBtn">
-                  <span>Login</span>
-                </button>
+                  <div className="btn_box">
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        window.open("/", "_self");
+                      }}
+                      className="btn"
+                    >
+                      <span>Cancel</span>
+                    </button>
+                    <button type="submit" className="btn LoginBtn">
+                      <span>Login</span>
+                    </button>
+                  </div>
+                </form>
               </div>
-            </form>
-          </section>
-        </Container>
+            </Container>
+          </Row>
+        </section>
       }
     </>
   );
