@@ -6,3 +6,17 @@
     rgba(237, 221, 83, 1) 100%
   );
 }
+* {
+  margin: 0px;
+  padding: 0px;
+}
+.main {
+  background: var(--primary_background);
+}
+/* Navbar Start */
+.navbar {
+  background: var(--primary_background);
+  border-bottom: 2px solid white;
+}
+
+/* Navbar End */
