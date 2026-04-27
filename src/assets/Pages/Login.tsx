@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Container, Row } from "react-bootstrap";
 import type { User } from "../Utilities/Type";
 import "../Style/formPages.css";
 import { useNavigate } from "react-router-dom";
+import { AppContext } from "../Context/AppContext";
 
 type LoginErrors = {
   email?: string;
@@ -10,6 +11,9 @@ type LoginErrors = {
 };
 
 export const Login = () => {
+  const context = useContext(AppContext);
+  if (!context) return null;
+  const { setCurrentUser } = context;
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
@@ -46,7 +50,7 @@ export const Login = () => {
       setPassword("");
       return;
     }
-
+    setCurrentUser(currentUser);
     localStorage.setItem("CurrentUser", JSON.stringify(currentUser));
     navigate("/dashboard");
   }

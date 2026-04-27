@@ -3,18 +3,24 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 // import NavDropdown from "react-bootstrap/NavDropdown";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { AppContext } from "../Context/AppContext";
 
 export const NavbarComponent = () => {
+  const navigate = useNavigate();
   const context = useContext(AppContext);
   if (!context) return null;
   const { currentUser } = context;
+
+  function signOut() {
+    localStorage.removeItem("CurrentUser");
+    navigate("/");
+  }
   return (
     <header>
       <Navbar expand="lg" className="fixed-top">
         <Container>
-          <Navbar.Brand href="/">Dream Fest</Navbar.Brand>
+          <Navbar.Brand href="/dashboard">Dream Fest</Navbar.Brand>
 
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll" role="navigation">
@@ -27,7 +33,7 @@ export const NavbarComponent = () => {
                 {currentUser?.userName}
               </NavLink>
 
-              <NavLink to="/login" className="nav-link">
+              <NavLink to="/" onClick={signOut} className="nav-link">
                 Sign out
               </NavLink>
             </Nav>

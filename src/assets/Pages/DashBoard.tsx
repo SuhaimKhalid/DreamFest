@@ -9,10 +9,10 @@ export const DashBoard = () => {
   const context = useContext(AppContext);
   if (!context) return null;
   const { currentUser, all_fest } = context;
-  useEffect(() => {
-    if (!all_fest) {
-    }
-  }, []);
+
+  function festHandler(id: string) {
+    console.log(id);
+  }
   return (
     <>
       <NavbarComponent />
@@ -37,7 +37,7 @@ export const DashBoard = () => {
             <Row>
               {all_fest
                 .filter((f) => f.email === currentUser?.email)
-                .map((f) => {
+                .map((f, index) => {
                   const dateObj = new Date(f.start_Date);
 
                   const month = dateObj.toLocaleDateString("en-GB", {
@@ -49,14 +49,24 @@ export const DashBoard = () => {
                   });
 
                   return (
-                    <div className="col-lg-4 col-md-6 col-sm-12 eventCol">
-                      <p className="E_month">{month} </p>
-                      <p className="E_month">{day} </p>
-                      <h3>{f.festival_Name}</h3>
-                      <p className="p1">Duration : {f.duration} (Days)</p>
-                      <p className="p1">
-                        Expected Audience: {f.expected_audience}
-                      </p>
+                    <div
+                      key={f.id}
+                      onClick={() => navigate(`festival/${f.id}`)}
+                      className="col-lg-4 col-md-6 col-sm-12"
+                    >
+                      <div
+                        className={`eventCol ${index % 2 == 0 ? "even" : "odd"}`}
+                      >
+                        <div className="date">
+                          <span className="E_month">{month} </span> <br />
+                          <span className="E_day">{day} </span>
+                        </div>
+                        <h3>{f.festival_Name}</h3>
+                        <p className="p1">Duration : {f.duration} (Days)</p>
+                        <p className="p1">
+                          Expected Audience: {f.expected_audience}
+                        </p>
+                      </div>
                     </div>
                   );
                 })}

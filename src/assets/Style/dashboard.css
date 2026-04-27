@@ -44,11 +44,31 @@
   text-align: center;
   background: #d1d4cb59;
   padding: 20px 10px;
-  height: 200px;
-  display: grid;
+  display: block;
   justify-content: center;
   align-items: center;
   border-radius: 20px;
+  transition: all 0.2s ease;
 }
-.eventCol .p1 {
+.eventCol:hover {
+  background: #fcfcfc;
+  color: #57c785;
+  cursor: pointer;
+}
+.eventCol .date {
+  text-align: left;
+  padding-left: 20px;
+}
+.eventCol .date .E_month {
+  font-size: 18px;
+}
+.eventCol .date .E_day {
+  font-size: 30px;
+}
+.eventCol.odd {
+  background-color: #57c785;
+}
+.eventCol.odd:hover {
+  background-color: white;
+  color: 57c785;
 }
