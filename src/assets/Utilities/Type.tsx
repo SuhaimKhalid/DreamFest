@@ -12,7 +12,44 @@ export interface Festival {
   expected_audience: string;
   start_Date: string;
   // Optional (for later expansion)
-  artists?: string[];
-  stages?: string[];
-  vendors?: string[];
+  artists?: Artist[];
+  stages?: Stage[];
+  vendors?: Vendor[];
+  staff?: Staff[];
+}
+
+export interface Artist {
+  id: string;
+  fest_id: string;
+  name: string;
+  fee: string;
+}
+
+export interface Stage {
+  id: string;
+  fest_id: string;
+  name: string;
+  capacity: number;
+  size: "main" | "secondary" | "small";
+}
+export interface Vendor {
+  id: string;
+  fest_id: string;
+  name: string;
+  type: "food" | "drink" | "merch";
+  costPerDay: number;
+  revenuePerPerson: number;
+}
+type StaffRole =
+  | "security"
+  | "medical"
+  | "cleaning"
+  | "logistics"
+  | "stage_manager";
+export interface Staff {
+  id: string;
+  fest_id: string;
+  role: StaffRole;
+  count: number; // how many staff of this type
+  costPerDay: number;
 }

@@ -1,0 +1,43 @@
+.Fest_info_section {
+  background: #ffffff54;
+  border-radius: 20px;
+  margin-top: 80px;
+  padding: 20px;
+  color: black;
+}
+.fest_info_pt1 {
+}
+.fest_info_pt1 .date_info {
+}
+.fest_info_pt1 .e_month {
+}
+.fest_info_pt1 .e_day {
+}
+.fest_info_pt1 h1 {
+}
+
+.fest_info_pt1 .e_Info {
+}
+.fest_info_pt2 {
+  text-align: center;
+}
+.fest_info_pt2 .date {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.fest_info_pt2 .date .p_day {
+  width: 150px;
+  height: 150px;
+  background: aliceblue;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 40px;
+}
+.fest_info_pt2 .date .p_day span {
+  font-size: 20px;
+}
+.fest_info_pt2 .timer {
+}

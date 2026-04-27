@@ -72,3 +72,62 @@
   background-color: white;
   color: 57c785;
 }
+.new_feature {
+  background: #e1eef194;
+  text-align: center;
+  border-radius: 5px;
+  height: 100px;
+  width: 173px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.new_feature:hover {
+  background: #ffffff;
+  color: #55c485;
+}
+.new_feature div svg {
+  font-size: 3rem;
+}
+.new_feature p {
+  margin: 0px;
+  font-weight: 600;
+}
+.col_festure {
+  background: #55c485;
+  text-align: center;
+  border-radius: 5px;
+  height: 100px;
+  width: 173px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  position: relative;
+}
+.col_festure h2 {
+  font-size: 20px;
+}
+.col_festure p {
+  font-size: 15px;
+  font-weight: 600;
+}
+.col_festure svg {
+  position: absolute;
+  top: -10px;
+  right: -18px;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+.new_fest_section {
+  margin: 20px 0px;
+  color: white;
+}
+.btn_close {
+}
+.btn_add {
+}
