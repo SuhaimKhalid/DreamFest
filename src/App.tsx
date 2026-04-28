@@ -12,7 +12,7 @@ import { DashBoard } from "./assets/Pages/DashBoard";
 
 import { CreateFest } from "./assets/Pages/CreatFest";
 import { Layout } from "./assets/Pages/Layout";
-import { Festival_Data_page } from "./assets/Pages/Festival_Date_page";
+import { Festival_Data_page } from "./assets/Pages/Festival_Data_page";
 
 function App() {
   return (

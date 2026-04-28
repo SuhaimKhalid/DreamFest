@@ -8,6 +8,7 @@ import { Artist_section } from "../Components/Festival_detail_page_components/Ar
 import { Stage_section } from "../Components/Festival_detail_page_components/Stage_section";
 import { Vender_section } from "../Components/Festival_detail_page_components/Vendor_section";
 import { Staff_section } from "../Components/Festival_detail_page_components/Staff_section";
+import { SimulationResult } from "../Components/Festival_detail_page_components/SimulationResult";
 
 export const Festival_Data_page = () => {
   const { id } = useParams();
@@ -23,6 +24,7 @@ export const Festival_Data_page = () => {
     <>
       <Container>
         <Festival_info fest={current_fest} />
+        <SimulationResult fest={current_fest} />
         <Artist_section fest={current_fest} />
         <Stage_section fest={current_fest} />
         <Vender_section fest={current_fest} />

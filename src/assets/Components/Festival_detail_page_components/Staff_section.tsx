@@ -105,9 +105,11 @@ export const Staff_section = ({ fest }: Props) => {
 
           {/* ADD BUTTON */}
           <div className="col-lg-2 col-md-4 col-sm-6">
-            <div className="new_feature" onClick={staffHandler_show}>
-              <FontAwesomeIcon icon={faPlus} /> <br />
-              <p>Add Staff</p>
+            <div className="new_feature">
+              <div>
+                <FontAwesomeIcon icon={faPlus} /> <br />
+                <p>Add Staff</p>
+              </div>
             </div>
           </div>
         </Row>

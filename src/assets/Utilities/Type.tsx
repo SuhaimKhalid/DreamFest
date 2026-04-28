@@ -50,6 +50,22 @@ export interface Staff {
   id: string;
   fest_id: string;
   role: StaffRole;
-  count: number; // how many staff of this type
+  count: number;
   costPerDay: number;
+}
+
+// For Simulation
+export type WeatherType = "sunny" | "cloudy" | "rain";
+
+export interface SimulationResult {
+  attendance: number;
+
+  ticketRevenue?: number;
+  vendorRevenue?: number;
+  totalRevenue?: number;
+
+  totalCost?: number;
+  profit?: number;
+
+  weather?: WeatherType;
 }
