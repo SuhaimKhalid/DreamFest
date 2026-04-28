@@ -1,6 +1,21 @@
-import { useMemo } from "react";
-import { Table } from "react-bootstrap";
+import { useState, useEffect } from "react";
+import { Table, Button } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faUsers,
+  faCloudSun,
+  faChartLine,
+} from "@fortawesome/free-solid-svg-icons";
+
 import type { Festival } from "../../Utilities/Type";
+
+// ✅ IMPORT YOUR CALCULATIONS
+import {
+  calculateCapex,
+  calculateOpex,
+  calculateRevenue,
+  calculateTotalAttendance,
+} from "../../Utilities/calculations";
 
 type Props = {
   fest: Festival;
@@ -10,7 +25,8 @@ export const SimulationResult = ({ fest }: Props) => {
   const duration = Number(fest.duration);
   const expectedAudience = Number(fest.expected_audience);
 
-  // Weather setup
+  const STORAGE_KEY = `festival_sim_${fest.id || "default"}`;
+
   const weatherValues = {
     sunny: 1.2,
     cloudy: 1.0,
@@ -21,9 +37,26 @@ export const SimulationResult = ({ fest }: Props) => {
     weatherValues,
   ) as (keyof typeof weatherValues)[];
 
-  // Weather simulation
-  const weatherPerDay = useMemo(() => {
-    return Array.from({ length: duration }).map(() => {
+  const [weatherPerDay, setWeatherPerDay] = useState<any[]>([]);
+  const [attendancePerDay, setAttendancePerDay] = useState<number[]>([]);
+  const [hasRun, setHasRun] = useState(false);
+
+  // LOAD SAVED DATA
+  useEffect(() => {
+    const saved = localStorage.getItem(STORAGE_KEY);
+
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      setWeatherPerDay(parsed.weatherPerDay);
+      setAttendancePerDay(parsed.attendancePerDay);
+      setHasRun(true);
+    }
+  }, []);
+
+  // RUN SIMULATION (ONLY LOGIC HERE)
+
+  const runSimulation = () => {
+    const weather = Array.from({ length: duration }).map(() => {
       const key = weatherKeys[Math.floor(Math.random() * weatherKeys.length)];
 
       return {
@@ -31,103 +64,171 @@ export const SimulationResult = ({ fest }: Props) => {
         multiplier: weatherValues[key],
       };
     });
-  }, [duration]);
 
-  // Audience simulation
-  const attendancePerDay = useMemo(() => {
     const startFactor = 1 / duration;
     const step = (1 - startFactor) / (duration - 1);
 
-    return Array.from({ length: duration }).map((_, i) => {
+    const attendance = Array.from({ length: duration }).map((_, i) => {
       const factor = startFactor + i * step;
+      const w = weather[i];
 
-      const weather = weatherPerDay[i];
-
-      return Math.floor(expectedAudience * factor * weather.multiplier);
+      return Math.floor(expectedAudience * factor * w.multiplier);
     });
-  }, [duration, expectedAudience, weatherPerDay]);
 
-  // Revenue simulation
-  const ticketPrice = fest.ticket || 20;
-  const revenuePerDay = attendancePerDay.map(
-    (audience) => audience * ticketPrice,
-  );
+    setWeatherPerDay(weather);
+    setAttendancePerDay(attendance);
+    setHasRun(true);
 
-  // Artist Simulation
-  const artists_fee =
-    fest.artists?.reduce((sum, i) => sum + Number(i.fee), 0) || 0;
-
-  // Stage Simulation
-  const stage_size_cost = {
-    main: 200,
-    secondary: 100,
-    small: 50,
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify({
+        weatherPerDay: weather,
+        attendancePerDay: attendance,
+      }),
+    );
   };
 
-  const stages = fest.stages?.map((s) => s.size) || [];
-  const stages_cost =
-    stages.reduce((sum, i) => sum + stage_size_cost[i], 0) || 0;
+  // CALCULATIONS (FROM FILE)
 
-  // Vendor Simulation
-  const vendorSum =
-    fest.vendors?.reduce((sum, v) => {
-      return sum + Number(v.costPerDay);
-    }, 0) || 0;
-  const vendorIncome = vendorSum * Number(fest.duration);
+  const ticketPrice = fest.ticket || 20;
 
-  // Staff Simulation
-  const staffCost =
-    fest.staff?.reduce((sum, i) => {
-      return sum + i.count * i.costPerPerson;
-    }, 0) || 0;
-
-  //Total Cost
-  const totalCost = artists_fee + stages_cost + staffCost * duration;
-  console.log(
-    "artists_fee + stages_cost + staffCost",
-    artists_fee,
-    stages_cost,
-    staffCost,
+  const totalRevenue = calculateRevenue(
+    attendancePerDay,
+    ticketPrice,
+    fest.vendors ?? [],
+    duration,
   );
-  // Profit Simulation
-  const totalRevenue =
-    revenuePerDay.reduce((sum, r) => sum + r, 0) + vendorIncome;
-  // Final Profit
+
+  const totalCapex = calculateCapex(fest);
+
+  const totalOpex = calculateOpex(fest, duration);
+
+  const totalCost = totalCapex + totalOpex;
+
   const profit = totalRevenue - totalCost;
 
+  const totalAttendance = calculateTotalAttendance(attendancePerDay);
+
+  // -----------------------------
+  // EXPORT JSON
+  // -----------------------------
+  const exportJSON = () => {
+    const data = {
+      fest,
+      weatherPerDay,
+      attendancePerDay,
+      totalRevenue,
+      totalCapex,
+      totalOpex,
+      totalCost,
+      profit,
+    };
+
+    const blob = new Blob([JSON.stringify(data, null, 2)], {
+      type: "application/json",
+    });
+
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `${fest.festival_Name || "festival"}_forecast.json`;
+    a.click();
+  };
+
+  // -----------------------------
+  // EXPORT CSV
+  // -----------------------------
+  const exportCSV = () => {
+    let csv = "Day,Audience,Weather\n";
+
+    attendancePerDay.forEach((a, i) => {
+      csv += `${i + 1},${a},${weatherPerDay[i]?.type}\n`;
+    });
+
+    csv += `\nRevenue,${totalRevenue}`;
+    csv += `\nCAPEX,${totalCapex}`;
+    csv += `\nOPEX,${totalOpex}`;
+    csv += `\nCost,${totalCost}`;
+    csv += `\nProfit,${profit}`;
+
+    const blob = new Blob([csv], { type: "text/csv" });
+
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `${fest.festival_Name || "festival"}_forecast.csv`;
+    a.click();
+  };
+
+  // -----------------------------
+  // UI
+  // -----------------------------
   return (
     <div className="col-lg-6">
-      <Table striped bordered hover variant="dark">
-        <thead>
-          <tr>
-            {Array.from({ length: duration }).map((_, i) => (
-              <th key={i}>Day {i + 1}</th>
-            ))}
-            <th>Total</th>
-          </tr>
-        </thead>
+      <Button variant="success" onClick={runSimulation} className="mb-3">
+        Run Simulation
+      </Button>
 
-        <tbody>
-          <tr>
-            {attendancePerDay.map((value, i) => (
-              <td key={i}>
-                Audience: {value}
+      {hasRun && (
+        <>
+          <Button className="btn btn-primary me-2" onClick={exportJSON}>
+            📤 Export JSON
+          </Button>
+
+          <Button className="btn btn-warning" onClick={exportCSV}>
+            📊 Export CSV
+          </Button>
+        </>
+      )}
+
+      {!hasRun && (
+        <p style={{ color: "white" }}>
+          Click Run Simulation to generate results
+        </p>
+      )}
+
+      {hasRun && (
+        <Table striped bordered hover variant="dark">
+          <thead>
+            <tr>
+              {Array.from({ length: duration }).map((_, i) => (
+                <th key={i}>Day {i + 1}</th>
+              ))}
+              <th>Summary</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              {attendancePerDay.map((value, i) => (
+                <td key={i}>
+                  <FontAwesomeIcon icon={faUsers} /> {value}
+                  <br />
+                  <FontAwesomeIcon icon={faCloudSun} /> {weatherPerDay[i]?.type}
+                </td>
+              ))}
+
+              <td>
+                <strong>
+                  <FontAwesomeIcon icon={faChartLine} /> Summary
+                </strong>
                 <br />
-                Weather: {weatherPerDay[i].type}
+                ------------------
                 <br />
-                Revenue: £{revenuePerDay[i]}
+                💰 Revenue: £{totalRevenue}
+                <br />
+                🏗 CAPEX: £{totalCapex}
+                <br />
+                🔁 OPEX: £{totalOpex}
+                <br />
+                💸 Cost: £{totalCost}
+                <br />
+                🟢 Profit: £{profit}
               </td>
-            ))}
-            <td>
-              Revenue: £{totalRevenue}
-              <br />
-              Cost: £{totalCost}
-              <br />
-              Profit: £{profit}
-            </td>
-          </tr>
-        </tbody>
-      </Table>
+            </tr>
+          </tbody>
+        </Table>
+      )}
     </div>
   );
 };

@@ -13,6 +13,7 @@ import { DashBoard } from "./assets/Pages/DashBoard";
 import { CreateFest } from "./assets/Pages/CreatFest";
 import { Layout } from "./assets/Pages/Layout";
 import { Festival_Data_page } from "./assets/Pages/Festival_Data_page";
+import { FestivalComparePage } from "./assets/Pages/FestivalComparePage";
 
 function App() {
   return (
@@ -31,6 +32,10 @@ function App() {
             <Route
               path="/dashboard/festival/:id"
               element={<Festival_Data_page />}
+            ></Route>
+            <Route
+              path={"/festivalcompare"}
+              element={<FestivalComparePage />}
             ></Route>
           </Route>
         </Routes>

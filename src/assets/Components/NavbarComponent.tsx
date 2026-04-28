@@ -29,6 +29,9 @@ export const NavbarComponent = () => {
               style={{ maxHeight: "100px" }}
               navbarScroll
             >
+              <NavLink to="/festivalcompare" className="nav-link">
+                Festival Compare
+              </NavLink>
               <NavLink to="/events" className="nav-link">
                 {currentUser?.userName}
               </NavLink>
