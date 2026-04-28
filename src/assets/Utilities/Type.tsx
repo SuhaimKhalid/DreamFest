@@ -7,6 +7,7 @@ export interface User {
 export interface Festival {
   id: string;
   email: string;
+  ticket: number;
   festival_Name: string;
   duration: string;
   expected_audience: string;
@@ -51,7 +52,7 @@ export interface Staff {
   fest_id: string;
   role: StaffRole;
   count: number;
-  costPerDay: number;
+  costPerPerson: number;
 }
 
 // For Simulation

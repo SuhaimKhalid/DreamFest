@@ -25,7 +25,7 @@ export const Staff_section = ({ fest }: Props) => {
   // ---------------- STATE ----------------
   const [role, setRole] = useState<StaffRole | "">("");
   const [count, setCount] = useState("");
-  const [costPerDay, setCostPerDay] = useState("");
+  const [costPerPerson, setCostPerPerson] = useState("");
   const [staffModal_show, set_staffModal_show] = useState(false);
 
   const staffHandler_show = () => set_staffModal_show(true);
@@ -33,7 +33,7 @@ export const Staff_section = ({ fest }: Props) => {
 
   // ---------------- ADD STAFF ----------------
   function add_Staff() {
-    if (!role || !count.trim() || !costPerDay.trim()) {
+    if (!role || !count.trim() || !costPerPerson.trim()) {
       return alert("Please fill all input fields.");
     }
 
@@ -42,7 +42,7 @@ export const Staff_section = ({ fest }: Props) => {
       fest_id: fest.id,
       role: role as StaffRole,
       count: Number(count),
-      costPerDay: Number(costPerDay),
+      costPerPerson: Number(costPerPerson),
     };
 
     const updatedFestivals = all_fest.map((f) => {
@@ -59,7 +59,7 @@ export const Staff_section = ({ fest }: Props) => {
     localStorage.setItem("Festivals", JSON.stringify(updatedFestivals));
     setRole("");
     setCount("");
-    setCostPerDay("");
+    setCostPerPerson("");
     set_staffModal_show(false);
   }
 
@@ -97,14 +97,17 @@ export const Staff_section = ({ fest }: Props) => {
                 <div>
                   <h2>Role: {s.role}</h2>
                   <p>Count: {s.count}</p>
-                  <p>Cost/Day: {s.costPerDay}</p>
+                  <p>Cost/Persone: {s.costPerPerson}</p>
                 </div>
               </div>
             </div>
           ))}
 
           {/* ADD BUTTON */}
-          <div className="col-lg-2 col-md-4 col-sm-6">
+          <div
+            className="col-lg-2 col-md-4 col-sm-6"
+            onClick={staffHandler_show}
+          >
             <div className="new_feature">
               <div>
                 <FontAwesomeIcon icon={faPlus} /> <br />
@@ -152,12 +155,12 @@ export const Staff_section = ({ fest }: Props) => {
 
             {/* COST */}
             <Form.Group className="mb-3">
-              <Form.Label>Cost Per Day</Form.Label>
+              <Form.Label>Cost Per Person</Form.Label>
               <Form.Control
                 type="number"
-                value={costPerDay}
-                onChange={(e) => setCostPerDay(e.target.value)}
-                placeholder="Cost per staff per day"
+                value={costPerPerson}
+                onChange={(e) => setCostPerPerson(e.target.value)}
+                placeholder="Cost per person"
               />
             </Form.Group>
           </Form>

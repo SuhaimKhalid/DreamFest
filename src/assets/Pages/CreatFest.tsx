@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { use, useContext, useState } from "react";
 import { Container, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import type { Festival } from "../Utilities/Type";
@@ -16,6 +16,7 @@ export const CreateFest = () => {
     duration?: string;
     expected_audience?: string;
     start_Date?: string;
+    ticket?: string;
   };
   const [errors, setErrors] = useState<createFestErrors>({});
 
@@ -23,6 +24,7 @@ export const CreateFest = () => {
 
   const [festival_Name, setFestival_Name] = useState("");
   const [duration, setDuration] = useState("");
+  const [ticket, setTicket] = useState("");
   const [expected_audience, setExpected_audience] = useState("");
   const [start_Date, setStart_Date] = useState("");
 
@@ -33,7 +35,8 @@ export const CreateFest = () => {
       !festival_Name.trim() ||
       !duration.trim() ||
       !expected_audience.trim() ||
-      !start_Date.trim()
+      !start_Date.trim() ||
+      !ticket.trim()
     ) {
       setErrors({
         festival_Name: !festival_Name.trim()
@@ -44,6 +47,7 @@ export const CreateFest = () => {
           ? "Expected Audience Size is requried."
           : "",
         start_Date: !start_Date.trim() ? "Start Date is requried." : "",
+        ticket: !ticket.trim() ? "Ticket is requried." : "",
       });
       return;
     }
@@ -59,6 +63,7 @@ export const CreateFest = () => {
     const new_fest: Festival = {
       id,
       email,
+      ticket: Number(ticket),
       festival_Name,
       duration,
       expected_audience,
@@ -76,7 +81,9 @@ export const CreateFest = () => {
     setDuration("");
     setExpected_audience("");
     setStart_Date("");
+    setTicket("");
     alert("Festival is Created!");
+    navigate("/dashboard");
   }
   return (
     <>
@@ -164,6 +171,25 @@ export const CreateFest = () => {
                     <small className="text-danger">
                       {errors.expected_audience}
                     </small>
+                  )}
+                </div>
+                {/* Ticket Price Input Field */}
+                <div className="mb-3">
+                  <label htmlFor="ticket" className="form-label">
+                    Ticket Price
+                  </label>
+                  <input
+                    value={ticket}
+                    onChange={(e) => {
+                      setTicket(e.target.value);
+                      setErrors((prev) => ({ ...prev, ticket: "" }));
+                    }}
+                    type="number"
+                    className="form-control"
+                    id="e_Aud_size"
+                  />
+                  {errors.ticket && (
+                    <small className="text-danger">{errors.ticket}</small>
                   )}
                 </div>
                 {/* Buttons */}
