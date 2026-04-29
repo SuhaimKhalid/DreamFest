@@ -9,7 +9,6 @@ import {
 
 import type { Festival } from "../../Utilities/Type";
 
-//  IMPORT YOUR CALCULATIONS
 import {
   calculateCapex,
   calculateOpex,
@@ -52,8 +51,7 @@ export const SimulationResult = ({ fest }: Props) => {
     }
   }, []);
 
-  // RUN SIMULATION (ONLY LOGIC HERE)
-
+  // RUN SIMULATION
   const runSimulation = () => {
     const weather = Array.from({ length: duration }).map(() => {
       const key = weatherKeys[Math.floor(Math.random() * weatherKeys.length)];
@@ -87,8 +85,7 @@ export const SimulationResult = ({ fest }: Props) => {
     );
   };
 
-  // CALCULATIONS (FROM FILE)
-
+  // CALCULATIONS
   const ticketPrice = fest.ticket || 20;
 
   const totalRevenue = calculateRevenue(
@@ -99,17 +96,34 @@ export const SimulationResult = ({ fest }: Props) => {
   );
 
   const totalCapex = calculateCapex(fest);
-
   const totalOpex = calculateOpex(fest, duration);
-
   const totalCost = totalCapex + totalOpex;
-
   const profit = totalRevenue - totalCost;
 
-  // const totalAttendance = calculateTotalAttendance(attendancePerDay);
+  // -------------------------------
+  // ⚡ ENERGY MODEL (NEW FEATURE)
+  // -------------------------------
+  const calculateEnergyUsage = () => {
+    const stageEnergy =
+      (fest.stages?.filter((s) => s.size === "main").length || 0) * 100 +
+      (fest.stages?.filter((s) => s.size === "secondary").length || 0) * 60 +
+      (fest.stages?.filter((s) => s.size === "small").length || 0) * 30;
+
+    const totalAttendance = attendancePerDay.reduce((a, b) => a + b, 0);
+
+    const crowdEnergy = totalAttendance / 1000;
+
+    const staffEnergy =
+      (fest.staff?.reduce((sum, s) => sum + s.count, 0) || 0) * 0.2;
+
+    const vendorEnergy = (fest.vendors?.length || 0) * 5;
+
+    return stageEnergy + crowdEnergy + staffEnergy + vendorEnergy;
+  };
+
+  const totalEnergy = hasRun ? calculateEnergyUsage() : 0;
 
   // EXPORT JSON
-
   const exportJSON = () => {
     const data = {
       fest,
@@ -120,6 +134,7 @@ export const SimulationResult = ({ fest }: Props) => {
       totalOpex,
       totalCost,
       profit,
+      totalEnergy,
     };
 
     const blob = new Blob([JSON.stringify(data, null, 2)], {
@@ -146,6 +161,7 @@ export const SimulationResult = ({ fest }: Props) => {
     csv += `\nOPEX,${totalOpex}`;
     csv += `\nCost,${totalCost}`;
     csv += `\nProfit,${profit}`;
+    csv += `\nEnergy,${totalEnergy}`;
 
     const blob = new Blob([csv], { type: "text/csv" });
 
@@ -157,7 +173,6 @@ export const SimulationResult = ({ fest }: Props) => {
   };
 
   // UI
-
   return (
     <div className="col-lg-12">
       <button onClick={runSimulation} className="run_sim">
@@ -207,11 +222,14 @@ export const SimulationResult = ({ fest }: Props) => {
                 Cost: £{totalCost}
                 <br />
                 Profit: £{profit}
+                <br />
+                Energy Use: {totalEnergy.toFixed(2)}
               </td>
             </tr>
           </tbody>
         </Table>
       )}
+
       <div className="export_btn_div">
         {hasRun && (
           <>
