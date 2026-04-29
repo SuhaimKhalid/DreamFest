@@ -1,6 +1,6 @@
 import { faCircleXmark, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Button, Form, Modal, Row } from "react-bootstrap";
+import { Button, Form, Modal, Row, Table } from "react-bootstrap";
 import type { Festival, Stage, Vendor } from "../../Utilities/Type";
 import { useContext, useState } from "react";
 import { AppContext } from "../../Context/AppContext";
@@ -84,7 +84,7 @@ export const Vender_section = ({ fest }: Props) => {
         <h3>Vendors</h3>
         <Row>
           {fest?.vendors?.map((vendor) => (
-            <div className="col-lg-2 col-md-4 col-sm-6" key={vendor.id}>
+            <div className="col-lg-3 col-md-4 col-sm-6" key={vendor.id}>
               <div className="col_festure">
                 <FontAwesomeIcon
                   icon={faCircleXmark}
@@ -92,17 +92,21 @@ export const Vender_section = ({ fest }: Props) => {
                   style={{ cursor: "pointer", color: "white" }}
                 />
                 <div>
-                  <h2>{vendor.name}</h2>
-                  <p>Type: {vendor.type}</p>
-                  <p>Cost/Day: {vendor.costPerDay}</p>
-                  <p>Revenue/Person: {vendor.revenuePerPerson}</p>
+                  <h2 className="col_info-1">{vendor.name}</h2>
+
+                  <p className="col_info-2">
+                    Type: {vendor.type.toLocaleUpperCase()} <br />
+                    <span className="col_info-3">
+                      Cost/Day: {vendor.costPerDay}
+                    </span>
+                  </p>
                 </div>
               </div>
             </div>
           ))}
 
           <div
-            className="col-lg-2 col-md-4 col-sm-6"
+            className="col-lg-3 col-md-4 col-sm-6"
             onClick={VendorHandler_show}
           >
             <div className="new_feature">
@@ -161,7 +165,14 @@ export const Vender_section = ({ fest }: Props) => {
                 type="number"
                 placeholder="Vendor Cost Per Day"
                 value={costPerDay}
-                onChange={(e) => setCostPerDay(e.target.value)}
+                min="0"
+                onChange={(e) => {
+                  const value = Number(e.target.value);
+
+                  if (value < 0)
+                    return alert("Number should be greater than 0");
+                  setCostPerDay(e.target.value);
+                }}
               ></Form.Control>
             </Form.Group>
             <Form.Group
@@ -171,20 +182,27 @@ export const Vender_section = ({ fest }: Props) => {
               <Form.Label>Revenue Per Person</Form.Label>
               <Form.Control
                 type="number"
+                min="0"
                 placeholder="Revenue Per Person"
                 value={revenuePerPerson}
-                onChange={(e) => setRevenuePerPerson(e.target.value)}
+                onChange={(e) => {
+                  const value = Number(e.target.value);
+
+                  if (value < 0)
+                    return alert("Number should be greater than 0");
+                  setRevenuePerPerson(e.target.value);
+                }}
               ></Form.Control>
             </Form.Group>
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button className="btn_close" onClick={VendorHandle_close}>
+          <button className="modal_btn_close" onClick={VendorHandle_close}>
             Close
-          </Button>
-          <Button className="btn_add" onClick={add_Vendor}>
+          </button>
+          <button className="modal_btn_add" onClick={add_Vendor}>
             Add
-          </Button>
+          </button>
         </Modal.Footer>
       </Modal>
     </>

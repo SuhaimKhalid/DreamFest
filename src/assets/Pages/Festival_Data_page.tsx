@@ -16,7 +16,6 @@ export const Festival_Data_page = () => {
   const context = useContext(AppContext);
   if (!context) return null;
   const { all_fest } = context;
-  // ----------------------------
   const current_fest = all_fest.find((f) => f.id === id);
   if (!current_fest) return <h1>Festival Not Found.</h1>;
 

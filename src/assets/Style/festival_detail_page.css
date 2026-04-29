@@ -10,14 +10,7 @@
 .Fest_info_section:hover {
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
-.fest_info_pt1 {
-}
-.fest_info_pt1 .date_info {
-}
-.fest_info_pt1 .e_month {
-}
-.fest_info_pt1 .e_day {
-}
+
 .fest_info_pt1 h1 {
   font-size: 3rem;
 }
@@ -50,8 +43,7 @@
   font-size: 20px;
   font-weight: 400;
 }
-.fest_info_pt2 .timer {
-}
+
 .fest_info_pt2 .timer_span {
   background: #ffffff;
   color: black;
@@ -59,4 +51,133 @@
   padding: 5px;
   border-radius: 5px;
   font-weight: 600;
+}
+
+.modal-header {
+  background: #eadd54;
+  color: white;
+}
+.modal-header button {
+  color: white;
+}
+.modal_btn_close {
+  padding: 8px;
+  border-radius: 7px;
+  background: #2b7d9b;
+  border: 2px solid #ffffff;
+  color: white;
+}
+.modal_btn_add {
+  padding: 8px;
+  border-radius: 7px;
+  background: #eada3f;
+  border: 2px solid #ffffff;
+  color: white;
+}
+
+.col_festure {
+  background: linear-gradient(to right, #96e6a1, #d4fc79);
+  color: #000;
+  text-align: center;
+  border-radius: 5px;
+  height: 150px;
+  width: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  position: relative;
+  transition: all 0.3s ease;
+  margin: 10px 0px;
+}
+.col_festure:hover {
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.col_festure h2 {
+  font-size: 25px;
+}
+.col_festure p {
+  font-size: 17px;
+  font-weight: 600;
+}
+.col_festure svg {
+  position: absolute;
+  top: 0px;
+  right: -3px;
+  font-size: 30px;
+  cursor: pointer;
+}
+.col_festure svg path {
+  color: #000000ba;
+}
+
+.new_fest_section {
+  margin: 20px 0px;
+  color: white;
+}
+
+.new_feature {
+  background: #ffffff47;
+  text-align: center;
+  border-radius: 5px;
+  height: 150px;
+  width: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin: 10px 0px;
+}
+.new_feature:hover {
+  background: #ffffff;
+  color: #55c485;
+}
+.new_feature div svg {
+  font-size: 3rem;
+}
+.new_feature p {
+  margin: 0px;
+  font-weight: 600;
+}
+/* Stage */
+
+.col_info-2 {
+  font-size: 19px !important;
+}
+.col_info-3 {
+  font-size: 17px !important;
+}
+/* Simulation */
+.run_sim {
+  background: #ffffff;
+  color: #55c486;
+  font-weight: 500;
+  padding: 10px;
+  border-radius: 10px;
+  border: 2px solid #55c486;
+  margin-bottom: 10px;
+  transition: all 0.3s ease;
+}
+.run_sim:hover {
+  background: #55c485;
+  color: white;
+}
+.export_btn_div {
+  float: right;
+}
+
+@media screen and (max-width: 575px) {
+  .col_festure {
+    height: 90%;
+    width: 100%;
+    margin: 10px 0px;
+  }
+  .new_feature {
+    height: 90%;
+    width: 100%;
+    margin: 10px 0px;
+  }
 }

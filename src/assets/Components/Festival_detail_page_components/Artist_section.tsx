@@ -70,7 +70,7 @@ export const Artist_section = ({ fest }: Props) => {
         <h3>Artists</h3>
         <Row>
           {fest?.artists?.map((artist) => (
-            <div className="col-lg-2 col-md-4 col-sm-6" key={artist.id}>
+            <div className="col-lg-3 col-md-4 col-sm-6" key={artist.id}>
               <div className="col_festure">
                 <FontAwesomeIcon
                   icon={faCircleXmark}
@@ -84,10 +84,12 @@ export const Artist_section = ({ fest }: Props) => {
               </div>
             </div>
           ))}
-
-          <div className="col-lg-2 col-md-4 col-sm-6">
+          <div
+            className="col-lg-3 col-md-4 col-sm-6"
+            onClick={artistHandler_show}
+          >
             <div className="new_feature">
-              <div onClick={artistHandler_show}>
+              <div>
                 <FontAwesomeIcon icon={faPlus} /> <br />
                 <p>Add Artist</p>
               </div>
@@ -128,7 +130,12 @@ export const Artist_section = ({ fest }: Props) => {
               <Form.Control
                 type="number"
                 value={artist_fee}
+                min="0"
                 onChange={(e) => {
+                  const value = Number(e.target.value);
+
+                  if (value < 0)
+                    return alert("Number should be greater than 0");
                   setArtist_fee(e.target.value);
                 }}
                 placeholder="Artist Fee"
@@ -139,12 +146,12 @@ export const Artist_section = ({ fest }: Props) => {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={artistHandle_close}>
+          <button className="modal_btn_close" onClick={artistHandle_close}>
             Close
-          </Button>
-          <Button variant="primary" onClick={add_Artist}>
+          </button>
+          <button className="modal_btn_add" onClick={add_Artist}>
             Add
-          </Button>
+          </button>
         </Modal.Footer>
       </Modal>
     </>

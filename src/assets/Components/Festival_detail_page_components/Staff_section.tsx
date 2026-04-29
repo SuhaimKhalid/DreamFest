@@ -86,7 +86,7 @@ export const Staff_section = ({ fest }: Props) => {
 
         <Row>
           {fest?.staff?.map((s) => (
-            <div className="col-lg-2 col-md-4 col-sm-6" key={s.id}>
+            <div className="col-lg-3 col-md-4 col-sm-6" key={s.id}>
               <div className="col_festure">
                 <FontAwesomeIcon
                   icon={faCircleXmark}
@@ -95,9 +95,13 @@ export const Staff_section = ({ fest }: Props) => {
                 />
 
                 <div>
-                  <h2>Role: {s.role}</h2>
-                  <p>Count: {s.count}</p>
-                  <p>Cost/Persone: {s.costPerPerson}</p>
+                  <h2 className="col_info-1">{s.role.toLocaleUpperCase()}</h2>
+                  <p className="col_info-2">
+                    Person: {s.count} <br />
+                    <span className="col_info-3">
+                      Cost/Person: {s.costPerPerson}
+                    </span>
+                  </p>
                 </div>
               </div>
             </div>
@@ -105,7 +109,7 @@ export const Staff_section = ({ fest }: Props) => {
 
           {/* ADD BUTTON */}
           <div
-            className="col-lg-2 col-md-4 col-sm-6"
+            className="col-lg-3 col-md-4 col-sm-6"
             onClick={staffHandler_show}
           >
             <div className="new_feature">
@@ -147,8 +151,14 @@ export const Staff_section = ({ fest }: Props) => {
               <Form.Label>Count</Form.Label>
               <Form.Control
                 type="number"
+                min="0"
                 value={count}
-                onChange={(e) => setCount(e.target.value)}
+                onChange={(e) => {
+                  const value = Number(e.target.value);
+                  if (value < 0)
+                    return alert("Number should be greater than 0");
+                  setCount(e.target.value);
+                }}
                 placeholder="Number of staff"
               />
             </Form.Group>
@@ -167,12 +177,12 @@ export const Staff_section = ({ fest }: Props) => {
         </Modal.Body>
 
         <Modal.Footer>
-          <Button variant="secondary" onClick={staffHandle_close}>
+          <button className="modal_btn_close" onClick={staffHandle_close}>
             Close
-          </Button>
-          <Button variant="primary" onClick={add_Staff}>
+          </button>
+          <button className="modal_btn_add" onClick={add_Staff}>
             Add
-          </Button>
+          </button>
         </Modal.Footer>
       </Modal>
     </>

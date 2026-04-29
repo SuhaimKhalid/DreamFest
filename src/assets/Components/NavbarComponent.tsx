@@ -33,9 +33,6 @@ export const NavbarComponent = () => {
               <NavLink to="/festivalcompare" className="nav-link">
                 Festival Compare
               </NavLink>
-              <NavLink to="/events" className="nav-link">
-                {currentUser?.userName}
-              </NavLink>
 
               <NavLink to="/" onClick={signOut} className="nav-link">
                 Sign out

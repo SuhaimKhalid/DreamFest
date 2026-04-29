@@ -135,9 +135,7 @@ export const SimulationResult = ({ fest }: Props) => {
     a.click();
   };
 
-  // -----------------------------
   // EXPORT CSV
-  // -----------------------------
   const exportCSV = () => {
     let csv = "Day,Audience,Weather\n";
 
@@ -160,26 +158,13 @@ export const SimulationResult = ({ fest }: Props) => {
     a.click();
   };
 
-  // -----------------------------
   // UI
-  // -----------------------------
+
   return (
-    <div className="col-lg-6">
-      <Button variant="success" onClick={runSimulation} className="mb-3">
+    <div className="col-lg-12">
+      <button onClick={runSimulation} className="run_sim">
         Run Simulation
-      </Button>
-
-      {hasRun && (
-        <>
-          <Button className="btn btn-primary me-2" onClick={exportJSON}>
-            📤 Export JSON
-          </Button>
-
-          <Button className="btn btn-warning" onClick={exportCSV}>
-            📊 Export CSV
-          </Button>
-        </>
-      )}
+      </button>
 
       {!hasRun && (
         <p style={{ color: "white" }}>
@@ -215,20 +200,33 @@ export const SimulationResult = ({ fest }: Props) => {
                 <br />
                 ------------------
                 <br />
-                💰 Revenue: £{totalRevenue}
+                Revenue: £{totalRevenue}
                 <br />
-                🏗 CAPEX: £{totalCapex}
+                CAPEX: £{totalCapex}
                 <br />
-                🔁 OPEX: £{totalOpex}
+                OPEX: £{totalOpex}
                 <br />
-                💸 Cost: £{totalCost}
+                Cost: £{totalCost}
                 <br />
-                🟢 Profit: £{profit}
+                Profit: £{profit}
               </td>
             </tr>
           </tbody>
         </Table>
       )}
+      <div className="export_btn_div">
+        {hasRun && (
+          <>
+            <Button className="btn btn-primary me-2" onClick={exportJSON}>
+              Export JSON
+            </Button>
+
+            <Button className="btn btn-warning" onClick={exportCSV}>
+              Export CSV
+            </Button>
+          </>
+        )}
+      </div>
     </div>
   );
 };

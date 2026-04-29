@@ -1,6 +1,6 @@
 import { faCircleXmark, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Button, Form, Modal, Row } from "react-bootstrap";
+import { Form, Modal, Row } from "react-bootstrap";
 import type { Festival, Stage } from "../../Utilities/Type";
 import { useContext, useState } from "react";
 import { AppContext } from "../../Context/AppContext";
@@ -76,7 +76,7 @@ export const Stage_section = ({ fest }: Props) => {
         <h3>Stages</h3>
         <Row>
           {fest?.stages?.map((stage) => (
-            <div className="col-lg-2 col-md-4 col-sm-6" key={stage.id}>
+            <div className="col-lg-3 col-md-4 col-sm-6" key={stage.id}>
               <div className="col_festure">
                 <FontAwesomeIcon
                   icon={faCircleXmark}
@@ -84,16 +84,20 @@ export const Stage_section = ({ fest }: Props) => {
                   style={{ cursor: "pointer", color: "white" }}
                 />
                 <div>
-                  <h2>{stage.name}</h2>
-                  <p>Capacity: {stage.capacity}</p>
-                  <p>Stage Size: {stage.size}</p>
+                  <h2 className="col_info-1">{stage.name}</h2>
+                  <p className="col_info-2">
+                    Stage Size: {stage.size} <br />
+                    <span className="col_info-3">
+                      Capacity: {stage.capacity}
+                    </span>
+                  </p>
                 </div>
               </div>
             </div>
           ))}
 
           <div
-            className="col-lg-2 col-md-4 col-sm-6"
+            className="col-lg-3 col-md-4 col-sm-6"
             onClick={stageHandler_show}
           >
             <div className="new_feature">
@@ -133,6 +137,10 @@ export const Stage_section = ({ fest }: Props) => {
                 placeholder="Capacity"
                 value={capacity}
                 onChange={(e) => {
+                  const value = Number(e.target.value);
+
+                  if (value < 0)
+                    return alert("Number should be greater than 0");
                   setCapacity(e.target.value);
                 }}
                 required
@@ -157,12 +165,12 @@ export const Stage_section = ({ fest }: Props) => {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button className="btn_close" onClick={stageHandle_close}>
+          <button className="modal_btn_close" onClick={stageHandle_close}>
             Close
-          </Button>
-          <Button className="btn_add" onClick={add_Stage}>
+          </button>
+          <button className="modal_btn_add" onClick={add_Stage}>
             Add
-          </Button>
+          </button>
         </Modal.Footer>
       </Modal>
     </>

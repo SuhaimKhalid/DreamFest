@@ -58,6 +58,7 @@ export const Festival_info = ({ fest }: Props) => {
               <p className="e_Info">
                 Number of Expected Audience: {fest?.expected_audience}
               </p>
+              <p className="e_Info">Ticket Price: {fest?.ticket}</p>
             </div>
           </div>
           <div className="col-lg-4 col-md-12">

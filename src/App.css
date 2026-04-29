@@ -39,3 +39,23 @@ body {
   }
 }
 /* Navbar End */
+
+.fest_compare_section h2 {
+  padding: 30px 0px;
+  text-align: center;
+}
+
+.run_compare {
+  background: #55c485;
+  color: white;
+  font-weight: 500;
+  padding: 10px;
+  border-radius: 10px;
+  border: 2px solid #55c486;
+  margin-bottom: 10px;
+  transition: all 0.3s ease;
+}
+.run_compare:hover {
+  background: #ffffff;
+  color: #55c486;
+}

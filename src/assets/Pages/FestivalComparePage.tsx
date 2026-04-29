@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Table, Button } from "react-bootstrap";
+import { Table, Button, Container } from "react-bootstrap";
 import type { Festival } from "../Utilities/Type";
 
 type SimData = {
@@ -72,110 +72,115 @@ export const FestivalComparePage = () => {
   };
 
   return (
-    <div style={{ marginTop: "60px", color: "white" }}>
-      <h2>🎪 Festival Comparison Dashboard</h2>
+    <Container>
+      <div
+        style={{ marginTop: "60px", color: "white" }}
+        className="fest_compare_section"
+      >
+        <h2>Festival Comparison Dashboard</h2>
 
-      {/* SELECTORS */}
-      <div style={{ marginBottom: "20px" }}>
-        <select
-          className="form-select mb-2"
-          onChange={(e) => setA(e.target.value)}
-        >
-          <option value="">Select Festival A</option>
-          {festivals.map((f) => (
-            <option key={f.id} value={f.id}>
-              {f.festival_Name}
-            </option>
-          ))}
-        </select>
-
-        <select
-          className="form-select mb-2"
-          onChange={(e) => setB(e.target.value)}
-        >
-          <option value="">Select Festival B</option>
-          {festivals.map((f) => (
-            <option key={f.id} value={f.id}>
-              {f.festival_Name}
-            </option>
-          ))}
-        </select>
-
-        <Button variant="info" onClick={compare}>
-          Compare Festivals
-        </Button>
-      </div>
-
-      {/* RESULT */}
-      {result && (
-        <>
-          <Table striped bordered hover variant="dark">
-            <thead>
-              <tr>
-                <th>Metric</th>
-                <th>Difference (A - B)</th>
-                <th>% Change</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              <tr>
-                <td>💰 Profit</td>
-                <td>£{result.profitDiff.toFixed(2)}</td>
-                <td>{result.profitPercent.toFixed(2)}%</td>
-              </tr>
-
-              <tr>
-                <td>📈 Revenue</td>
-                <td>£{result.revenueDiff.toFixed(2)}</td>
-                <td>{result.revenuePercent.toFixed(2)}%</td>
-              </tr>
-
-              <tr>
-                <td>💸 Cost</td>
-                <td>£{result.costDiff.toFixed(2)}</td>
-                <td>{result.costPercent.toFixed(2)}%</td>
-              </tr>
-
-              <tr>
-                <td>👥 Attendance</td>
-                <td>{result.attendanceDiff}</td>
-                <td>{result.attendancePercent.toFixed(2)}%</td>
-              </tr>
-            </tbody>
-          </Table>
-
-          {/* INSIGHT BOX */}
-          <div
-            style={{
-              marginTop: "15px",
-              padding: "15px",
-              background: "#1f1f1f",
-              borderRadius: "8px",
-            }}
+        {/* SELECTORS */}
+        <div style={{ marginBottom: "20px" }}>
+          <select
+            className="form-select mb-2"
+            onChange={(e) => setA(e.target.value)}
           >
-            <h5>📊 Insight</h5>
+            <option value="">Select Festival A</option>
+            {festivals.map((f) => (
+              <option key={f.id} value={f.id}>
+                {f.festival_Name}
+              </option>
+            ))}
+          </select>
 
-            <p>
-              {result.profitDiff > 0
-                ? "🏆 Festival A performs better in profit"
-                : "🏆 Festival B performs better in profit"}
-            </p>
+          <select
+            className="form-select mb-2"
+            onChange={(e) => setB(e.target.value)}
+          >
+            <option value="">Select Festival B</option>
+            {festivals.map((f) => (
+              <option key={f.id} value={f.id}>
+                {f.festival_Name}
+              </option>
+            ))}
+          </select>
 
-            <p>
-              {result.attendanceDiff > 0
-                ? "👥 Festival A has higher attendance"
-                : "👥 Festival B has higher attendance"}
-            </p>
+          <button className="run_compare" onClick={compare}>
+            Compare Festivals
+          </button>
+        </div>
 
-            <p>
-              {result.revenueDiff > 0
-                ? "💰 Festival A generates more revenue"
-                : "💰 Festival B generates more revenue"}
-            </p>
-          </div>
-        </>
-      )}
-    </div>
+        {/* RESULT */}
+        {result && (
+          <>
+            <Table striped bordered hover variant="dark">
+              <thead>
+                <tr>
+                  <th>Metric</th>
+                  <th>Difference (A - B)</th>
+                  <th>% Change</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr>
+                  <td>💰 Profit</td>
+                  <td>£{result.profitDiff.toFixed(2)}</td>
+                  <td>{result.profitPercent.toFixed(2)}%</td>
+                </tr>
+
+                <tr>
+                  <td>📈 Revenue</td>
+                  <td>£{result.revenueDiff.toFixed(2)}</td>
+                  <td>{result.revenuePercent.toFixed(2)}%</td>
+                </tr>
+
+                <tr>
+                  <td>💸 Cost</td>
+                  <td>£{result.costDiff.toFixed(2)}</td>
+                  <td>{result.costPercent.toFixed(2)}%</td>
+                </tr>
+
+                <tr>
+                  <td>👥 Attendance</td>
+                  <td>{result.attendanceDiff}</td>
+                  <td>{result.attendancePercent.toFixed(2)}%</td>
+                </tr>
+              </tbody>
+            </Table>
+
+            {/* INSIGHT BOX */}
+            <div
+              style={{
+                marginTop: "15px",
+                padding: "15px",
+                background: "#1f1f1f",
+                borderRadius: "8px",
+              }}
+            >
+              <h5>📊 Insight</h5>
+
+              <p>
+                {result.profitDiff > 0
+                  ? "🏆 Festival A performs better in profit"
+                  : "🏆 Festival B performs better in profit"}
+              </p>
+
+              <p>
+                {result.attendanceDiff > 0
+                  ? "👥 Festival A has higher attendance"
+                  : "👥 Festival B has higher attendance"}
+              </p>
+
+              <p>
+                {result.revenueDiff > 0
+                  ? "💰 Festival A generates more revenue"
+                  : "💰 Festival B generates more revenue"}
+              </p>
+            </div>
+          </>
+        )}
+      </div>
+    </Container>
   );
 };
