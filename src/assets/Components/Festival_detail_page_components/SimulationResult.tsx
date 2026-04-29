@@ -14,7 +14,6 @@ import {
   calculateCapex,
   calculateOpex,
   calculateRevenue,
-  calculateTotalAttendance,
 } from "../../Utilities/calculations";
 
 type Props = {
