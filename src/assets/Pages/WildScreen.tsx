@@ -1,8 +1,8 @@
-import { useEffect } from "react";
+import { useLayoutEffect } from "react";
 import gsap from "gsap"; //For Animation
 
 export const WildScreen = () => {
-  useEffect(() => {
+  useLayoutEffect(() => {
     const el = document.querySelector(".ws_txt");
 
     if (!el) return;
@@ -18,36 +18,39 @@ export const WildScreen = () => {
     });
 
     el.innerHTML = spanText;
-
-    gsap.from(".ws_txt .ft", {
-      y: 80,
-      opacity: 0,
-      duration: 0.6,
-      delay: 0.5,
-      stagger: 0.15,
-    });
-
-    gsap.from(".ws_txt .bt", {
-      y: 80,
-      opacity: 0,
-      duration: 0.6,
-      delay: 0.5,
-      stagger: -0.15,
-    });
-
-    gsap.fromTo(
-      ".btn_section",
-      {
+    const ctx = gsap.context(() => {
+      gsap.from(".ws_txt .ft", {
+        y: 80,
         opacity: 0,
-        y: 10,
-      },
-      {
-        opacity: 1,
-        y: 0,
         duration: 0.6,
-        delay: 1.2,
-      },
-    );
+        delay: 0.5,
+        stagger: 0.15,
+      });
+
+      gsap.from(".ws_txt .bt", {
+        y: 80,
+        opacity: 0,
+        duration: 0.6,
+        delay: 0.5,
+        stagger: -0.15,
+      });
+
+      gsap.fromTo(
+        ".btn_section",
+        {
+          opacity: 0,
+          y: 10,
+        },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          delay: 1.2,
+        },
+      );
+    });
+
+    return () => ctx.revert();
   }, []);
   return (
     <>

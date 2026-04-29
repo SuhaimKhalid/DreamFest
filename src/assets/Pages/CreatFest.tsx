@@ -1,4 +1,4 @@
-import { use, useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { Container, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import type { Festival } from "../Utilities/Type";
@@ -59,7 +59,10 @@ export const CreateFest = () => {
     const email = currentUser.email;
 
     const id = Date.now().toString();
-
+    if (new Date(start_Date) < new Date()) {
+      alert("Festival date cannot be in the past");
+      return;
+    }
     const new_fest: Festival = {
       id,
       email,
@@ -121,6 +124,7 @@ export const CreateFest = () => {
                   </label>
                   <input
                     value={start_Date}
+                    min={new Date().toISOString().split("T")[0]}
                     onChange={(e) => {
                       setStart_Date(e.target.value);
                       setErrors((prev) => ({ ...prev, start_Date: "" }));
@@ -140,6 +144,7 @@ export const CreateFest = () => {
                   </label>
                   <input
                     value={duration}
+                    min="0"
                     onChange={(e) => {
                       setDuration(e.target.value);
                       setErrors((prev) => ({ ...prev, duration: "" }));
@@ -159,6 +164,7 @@ export const CreateFest = () => {
                   </label>
                   <input
                     value={expected_audience}
+                    min="0"
                     onChange={(e) => {
                       setExpected_audience(e.target.value);
                       setErrors((prev) => ({ ...prev, expected_audience: "" }));
@@ -180,6 +186,7 @@ export const CreateFest = () => {
                   </label>
                   <input
                     value={ticket}
+                    min="0"
                     onChange={(e) => {
                       setTicket(e.target.value);
                       setErrors((prev) => ({ ...prev, ticket: "" }));

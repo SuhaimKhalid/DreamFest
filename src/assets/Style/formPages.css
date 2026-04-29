@@ -1,7 +1,3 @@
-* {
-  margin: 0px;
-  padding: 0px;
-}
 :root {
   --primary_background: linear-gradient(
     90deg,
@@ -10,120 +6,47 @@
     rgba(237, 221, 83, 1) 100%
   );
 }
-/* Login Page CSS Start */
 
-#LoginPage {
-  width: 100%;
-  height: 100vh;
-  background: #2a7b9b;
-  background: var(--primary_background);
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+/* Shared Page Layout */
 
-.form_col {
-  border: 2px solid white;
-  border-radius: 10px;
-  padding: 20px;
-  width: 500px;
-}
-.form_col .btn_box button {
-  display: block;
-  width: 100%;
-  background-color: #ffe9e959;
-  margin: 10px 0px;
-  font-size: 1.2rem;
-  font-weight: 600;
-  transition: all 0.3s ease;
-}
-.form_col .btn_box button:hover {
-  background-color: rgb(255, 255, 255);
-  color: #57c785;
-}
-@media screen and (max-width: 550px) {
-  #LoginPage {
-    display: block;
-    height: 100vh;
-  }
-  .form_col {
-    width: 90%;
-
-    margin: 20px auto;
-  }
-}
-/* Login Page CSS End */
-
-/* Register Page CSS Start */
-
-#RegisterPage {
-  width: 100%;
-  height: 100vh;
-  background: #2a7b9b;
-  background: var(--primary_background);
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-#RegisterPage h1 {
-  text-align: center;
-}
-.form_col {
-  border: 2px solid white;
-  border-radius: 10px;
-  padding: 20px;
-  width: 500px;
-}
-.form_col .btn_box button {
-  display: block;
-  width: 100%;
-  background-color: #ffe9e959;
-  margin: 10px 0px;
-  font-size: 1.2rem;
-  font-weight: 600;
-  transition: all 0.3s ease;
-}
-.form_col .btn_box button:hover {
-  background-color: rgb(255, 255, 255);
-  color: #57c785;
-}
-@media screen and (max-width: 550px) {
-  #LoginPage {
-    display: block;
-    height: 100vh;
-  }
-  .form_col {
-    width: 90%;
-
-    margin: 20px auto;
-  }
-}
-/* Register Page CSS End */
-
-/* Create Fest Page CSS Start */
-
+#LoginPage,
+#RegisterPage,
 #CreateFestival {
-  padding-top: 25%;
   width: 100%;
-  height: 100vh;
-  background: #2a7b9b;
+  min-height: 100vh; /* fixed for mobile */
   background: var(--primary_background);
   color: white;
+
   display: flex;
   justify-content: center;
   align-items: center;
+
+  padding: 20px;
 }
+#CreateFestival {
+  padding-top: 100px;
+}
+/* Headings */
+
+#RegisterPage h1,
 #CreateFestival h1 {
   text-align: center;
 }
+
+/* Form Box */
+
 .form_col {
   border: 2px solid white;
   border-radius: 10px;
   padding: 20px;
+
   width: 500px;
+
+  margin: 0 auto;
 }
+
+/* Buttons */
+
 .form_col .btn_box button {
   display: block;
   width: 100%;
@@ -133,9 +56,21 @@
   font-weight: 600;
   transition: all 0.3s ease;
 }
+
 .form_col .btn_box button:hover {
   background-color: rgb(255, 255, 255);
   color: #57c785;
 }
 
-/* Create Fest Page CSS End */
+/* Mobile Improvements */
+
+@media screen and (max-width: 550px) {
+  .form_col {
+    padding: 15px;
+    width: 100%;
+    max-width: 500px;
+  }
+  .form_col .btn_box button {
+    font-size: 1rem;
+  }
+}

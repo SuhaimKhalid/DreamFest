@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useLayoutEffect } from "react";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
@@ -16,6 +16,7 @@ export const NavbarComponent = () => {
     localStorage.removeItem("CurrentUser");
     navigate("/");
   }
+
   return (
     <header>
       <Navbar expand="lg" className="fixed-top">
@@ -25,7 +26,7 @@ export const NavbarComponent = () => {
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll" role="navigation">
             <Nav
-              className="ms-auto my-2 my-lg-0"
+              className="ms-lg-auto ms-sm-0  my-2 my-lg-0"
               style={{ maxHeight: "100px" }}
               navbarScroll
             >

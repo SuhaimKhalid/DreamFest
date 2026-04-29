@@ -49,11 +49,13 @@
   align-items: center;
   border-radius: 20px;
   transition: all 0.2s ease;
+  margin: 10px 0px;
 }
 .eventCol:hover {
   background: #fcfcfc;
   color: #57c785;
   cursor: pointer;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 .eventCol .date {
   text-align: left;

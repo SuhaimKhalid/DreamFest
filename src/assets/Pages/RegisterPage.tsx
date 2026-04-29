@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useLayoutEffect, useState } from "react";
 import type { User } from "../Utilities/Type";
 import { Container, Row } from "react-bootstrap";
 import "../Style/formPages.css";
@@ -33,6 +33,27 @@ export const RegisterPage = () => {
       setUser(JSON.parse(savedUser));
     }
   }, []);
+  useLayoutEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        ".form_col",
+        {
+          opacity: 0,
+          y: 90,
+        },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 2.4,
+          delay: 0.5,
+          ease: "power3.out",
+          overwrite: "auto",
+        },
+      );
+    });
+
+    return () => ctx.revert();
+  }, []);
 
   // Function to store Data in Local Storage
   function RegisterFunction(e: React.FormEvent<HTMLFormElement>) {
@@ -46,7 +67,14 @@ export const RegisterPage = () => {
       });
       return;
     }
-
+    if (password.length < 6) {
+      setErrors({
+        userName: "",
+        email: "",
+        password: "Password must be at least 6 characters.",
+      });
+      return;
+    }
     const exists = user.some((u) => u.email === email);
     if (exists) {
       alert("EmailId already exists!");

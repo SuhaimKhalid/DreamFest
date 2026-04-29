@@ -14,6 +14,7 @@ import { CreateFest } from "./assets/Pages/CreatFest";
 import { Layout } from "./assets/Pages/Layout";
 import { Festival_Data_page } from "./assets/Pages/Festival_Data_page";
 import { FestivalComparePage } from "./assets/Pages/FestivalComparePage";
+import { ProtectedRoute } from "./assets/Utilities/ProtectedRoutes";
 
 function App() {
   return (
@@ -26,17 +27,19 @@ function App() {
           <Route path="/login" element={<Login />}></Route>
 
           {/* With Navbar */}
-          <Route element={<Layout />}>
-            <Route path="/dashboard" element={<DashBoard />}></Route>
-            <Route path="/createfestival" element={<CreateFest />}></Route>
-            <Route
-              path="/dashboard/festival/:id"
-              element={<Festival_Data_page />}
-            ></Route>
-            <Route
-              path={"/festivalcompare"}
-              element={<FestivalComparePage />}
-            ></Route>
+          <Route element={<ProtectedRoute />}>
+            <Route element={<Layout />}>
+              <Route path="/dashboard" element={<DashBoard />}></Route>
+              <Route path="/createfestival" element={<CreateFest />}></Route>
+              <Route
+                path="/dashboard/festival/:id"
+                element={<Festival_Data_page />}
+              ></Route>
+              <Route
+                path={"/festivalcompare"}
+                element={<FestivalComparePage />}
+              ></Route>
+            </Route>
           </Route>
         </Routes>
       </main>

@@ -1,6 +1,6 @@
-import { Card, Container, Row } from "react-bootstrap";
+import { Container, Row } from "react-bootstrap";
 import NavbarComponent from "../Components/NavbarComponent";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { AppContext } from "../Context/AppContext";
 import { useNavigate } from "react-router-dom";
 
@@ -13,6 +13,7 @@ export const DashBoard = () => {
   function festHandler(id: string) {
     console.log(id);
   }
+
   return (
     <>
       <NavbarComponent />

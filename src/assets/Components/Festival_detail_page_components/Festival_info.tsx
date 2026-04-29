@@ -7,6 +7,7 @@ type Props = {
 };
 
 export const Festival_info = ({ fest }: Props) => {
+  const [live, setLive] = useState(false);
   // ----------------------
   const targetDate = new Date(fest?.start_Date);
   const month = targetDate.toLocaleDateString("en-GB", {
@@ -27,6 +28,7 @@ export const Festival_info = ({ fest }: Props) => {
     const seconds = Math.floor((diff / 1000) % 60);
 
     if (diff <= 0) {
+      setLive(true);
       return { days: 0, hours: 0, minutes: 0, seconds: 0 };
     }
 
@@ -52,7 +54,7 @@ export const Festival_info = ({ fest }: Props) => {
             <div className="fest_info_pt1">
               <h1>{fest.festival_Name}</h1>
 
-              <p className="e_Info">Duration:{fest?.duration}</p>
+              <p className="e_Info">Duration : {fest?.duration} (Days)</p>
               <p className="e_Info">
                 Number of Expected Audience: {fest?.expected_audience}
               </p>
@@ -61,11 +63,22 @@ export const Festival_info = ({ fest }: Props) => {
           <div className="col-lg-4 col-md-12">
             <div className="fest_info_pt2">
               <div className="date">
-                <p className="p_day">{day}</p>
+                <p className="p_day">
+                  {day} <br />
+                  <span> {month}</span>
+                </p>
               </div>
               <p className="timer">
-                {timeLeft.days}d {timeLeft.hours}h {timeLeft.minutes}m{" "}
-                {timeLeft.seconds}s
+                {live ? (
+                  "Event is Live!"
+                ) : (
+                  <>
+                    <span className="timer_span">{timeLeft.days}d</span>
+                    <span className="timer_span">{timeLeft.hours}h</span>
+                    <span className="timer_span">{timeLeft.minutes}m</span>
+                    <span className="timer_span">{timeLeft.seconds}s</span>
+                  </>
+                )}
               </p>
             </div>
           </div>

@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useLayoutEffect, useState } from "react";
 import { Container, Row } from "react-bootstrap";
 import type { User } from "../Utilities/Type";
 import "../Style/formPages.css";
@@ -28,6 +28,27 @@ export const Login = () => {
     }
     console.log(savedUser);
   }, []);
+  useLayoutEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        ".form_col",
+        {
+          opacity: 0,
+          y: 90,
+        },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 2.4,
+          delay: 0.5,
+          ease: "power3.out",
+          overwrite: "auto",
+        },
+      );
+    });
+
+    return () => ctx.revert();
+  }, []);
 
   function LoginHandler(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -54,6 +75,7 @@ export const Login = () => {
     localStorage.setItem("CurrentUser", JSON.stringify(currentUser));
     navigate("/dashboard");
   }
+
   return (
     <>
       {
