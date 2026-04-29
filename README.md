@@ -8,6 +8,10 @@ The app also supports saving, exporting, and comparing multiple festival setups.
 
 ---
 
+## 🌐 Live Demo
+
+👉 https://dream-fest.netlify.app/
+
 ## 🚀 Features
 
 - Create and design music festivals
