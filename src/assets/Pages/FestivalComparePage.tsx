@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Table, Button, Container } from "react-bootstrap";
+import { Table, Container } from "react-bootstrap";
 import type { Festival } from "../Utilities/Type";
 
 type SimData = {

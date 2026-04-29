@@ -1,7 +1,7 @@
 import { faCircleXmark, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Button, Form, Modal, Row, Table } from "react-bootstrap";
-import type { Festival, Stage, Vendor } from "../../Utilities/Type";
+import { Form, Modal, Row } from "react-bootstrap";
+import type { Festival, Vendor } from "../../Utilities/Type";
 import { useContext, useState } from "react";
 import { AppContext } from "../../Context/AppContext";
 

@@ -1,16 +1,11 @@
-import { useContext, useLayoutEffect } from "react";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 // import NavDropdown from "react-bootstrap/NavDropdown";
 import { NavLink, useNavigate } from "react-router-dom";
-import { AppContext } from "../Context/AppContext";
 
 export const NavbarComponent = () => {
   const navigate = useNavigate();
-  const context = useContext(AppContext);
-  if (!context) return null;
-  const { currentUser } = context;
 
   function signOut() {
     localStorage.removeItem("CurrentUser");
