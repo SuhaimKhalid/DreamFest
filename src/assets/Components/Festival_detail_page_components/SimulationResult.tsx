@@ -9,7 +9,7 @@ import {
 
 import type { Festival } from "../../Utilities/Type";
 
-// ✅ IMPORT YOUR CALCULATIONS
+//  IMPORT YOUR CALCULATIONS
 import {
   calculateCapex,
   calculateOpex,
@@ -107,11 +107,10 @@ export const SimulationResult = ({ fest }: Props) => {
 
   const profit = totalRevenue - totalCost;
 
-  const totalAttendance = calculateTotalAttendance(attendancePerDay);
+  // const totalAttendance = calculateTotalAttendance(attendancePerDay);
 
-  // -----------------------------
   // EXPORT JSON
-  // -----------------------------
+
   const exportJSON = () => {
     const data = {
       fest,

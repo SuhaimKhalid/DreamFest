@@ -10,10 +10,6 @@ export const DashBoard = () => {
   if (!context) return null;
   const { currentUser, all_fest } = context;
 
-  function festHandler(id: string) {
-    console.log(id);
-  }
-
   return (
     <>
       <NavbarComponent />
